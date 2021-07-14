@@ -25,7 +25,7 @@
 
 ## Installation
 
-- Node.js [v12](https://nodejs.org/en/blog/release/v12.22.2/)
+- Node.js [v12](https://nodejs.org/en/blog/release/v12.22.2/), npm v6 권장
 
 ```bash
 $ npm i -g @nest js/cli
