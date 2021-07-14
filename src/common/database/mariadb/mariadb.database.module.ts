@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { databaseProviders } from './mariadb.database.providers';
+import { MariadbDatabaseProviders } from './mariadb.database.providers';
 
 @Module({
-	providers: [...databaseProviders],
-	exports: [...databaseProviders],
+	providers: [...MariadbDatabaseProviders],
+	exports: [...MariadbDatabaseProviders],
 })
 export class MariadbDatabaseModule { }

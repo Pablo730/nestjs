@@ -1,38 +1,153 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiOperation, ApiTags, getSchemaPath } from '@nestjs/swagger';
 import { undefinedToNullInterceptor } from 'src/common/interceptors/undefinedToNull.interceptor';
+import { RequestUserDto } from './dto/request-user.dto';
+import { ResponseUserDto } from './dto/response-user.dto';
+import { Users } from './entities/user.entity';
 
-@ApiTags('Users API (TypeORM database)')
+@ApiTags('USERS API')
 @UseInterceptors(undefinedToNullInterceptor)
 @Controller('users')
 export class UsersController {
 	constructor(private readonly usersService: UsersService) { }
 
+	@ApiOperation({ summary: '회원가입' })
+	@ApiCreatedResponse({
+		description: 'SUCCESS',
+		schema: {
+			properties: {
+				code: { default: 'SUCCESS' },
+				data: { $ref: getSchemaPath(ResponseUserDto) },
+			}
+		}
+	})
+	@ApiBadRequestResponse({
+		description: 'FAIL',
+		schema: {
+			properties: {
+				code: { default: 'FAIL' },
+				message: { example: 'already registered users.' }
+			}
+		}
+	})
 	@Post()
-	create(@Body() createUserDto: CreateUserDto) {
-		return this.usersService.create(createUserDto);
+	async join(@Body() requestUserDto: RequestUserDto) {
+		return this.usersService.join(requestUserDto);
 	}
 
-	@Get()
-	findAll() {
-		return this.usersService.findAll();
+	@ApiOperation({ summary: '로그인' })
+	@ApiCreatedResponse({
+		description: 'SUCCESS',
+		schema: {
+			properties: {
+				code: { default: 'SUCCESS' },
+				data: { $ref: getSchemaPath(ResponseUserDto) },
+			}
+		}
+	})
+	@ApiBadRequestResponse({
+		description: 'FAIL',
+		schema: {
+			properties: {
+				code: { default: 'FAIL' },
+				message: { example: 'password Inconsistency.' }
+			}
+		}
+	})
+	@Post('login')
+	async login(@Body() requestUserDto: RequestUserDto) {
+		return this.usersService.login(requestUserDto);
 	}
 
+
+	@ApiOperation({ summary: '로그아웃' })
+	@ApiCreatedResponse({
+		description: 'SUCCESS',
+		schema: {
+			properties: {
+				code: { default: 'SUCCESS' }
+			}
+		}
+	})
+	@ApiBadRequestResponse({
+		description: 'FAIL',
+		schema: {
+			properties: {
+				code: { default: 'FAIL' },
+				message: { example: 'already logout.' }
+			}
+		}
+	})
+	@Post('logout')
+	async logout() {
+		return this.usersService.logout();
+	}
+
+	@ApiOperation({ summary: '내 정보 가져오기' })
+	@ApiCreatedResponse({
+		description: 'SUCCESS',
+		schema: {
+			properties: {
+				code: { default: 'SUCCESS' },
+				data: { $ref: getSchemaPath(ResponseUserDto) },
+			}
+		}
+	})
+	@ApiBadRequestResponse({
+		description: 'FAIL',
+		schema: {
+			properties: {
+				code: { default: 'FAIL' },
+				message: { example: 'non-existent user.' }
+			}
+		}
+	})
 	@Get(':id')
-	findOne(@Param('id') id: string) {
+	async findOne(@Param('id') id: string) {
 		return this.usersService.findOne(+id);
 	}
 
+	@ApiOperation({ summary: '내 정보 업데이트' })
+	@ApiCreatedResponse({
+		description: 'SUCCESS',
+		schema: {
+			properties: {
+				code: { default: 'SUCCESS' },
+				data: { $ref: getSchemaPath(ResponseUserDto) },
+			}
+		}
+	})
+	@ApiBadRequestResponse({
+		description: 'FAIL',
+		schema: {
+			properties: {
+				code: { default: 'FAIL' },
+				message: { example: 'non-existent user.' }
+			}
+		}
+	})
 	@Patch(':id')
-	update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-		return this.usersService.update(+id, updateUserDto);
+	async update(@Param('id') id: string, @Body() requestUserDto: RequestUserDto) {
+		return this.usersService.update(+id, requestUserDto);
 	}
 
+	@ApiOperation({ summary: '탈퇴 요청' })
+	@ApiCreatedResponse({
+		description: 'SUCCESS',
+		schema: { properties: { code: { default: 'SUCCESS' } } }
+	})
+	@ApiBadRequestResponse({
+		description: 'FAIL',
+		schema: {
+			properties: {
+				code: { default: 'FAIL' },
+				message: { example: 'already resigned user.' }
+			}
+		}
+	})
 	@Delete(':id')
-	remove(@Param('id') id: string) {
+	async remove(@Param('id') id: string) {
 		return this.usersService.remove(+id);
 	}
 }

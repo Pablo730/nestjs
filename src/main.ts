@@ -8,18 +8,20 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 	const port = process.env.PORT || 3000;
 
+	// Swagger
 	const config = new DocumentBuilder()
-		.setTitle('NestJS+TypeORM API')
-		.setDescription('가비아 NestJS+TypeORM Study API docs')
+		.setTitle('가비아 NestJS+TypeORM API docs')
+		.setDescription('NestJS+TypeORM sample API made By Pablo')
 		.setVersion('0.0.1')
-		// .addTag('AWS-TEST')
 		.build();
 	const document = SwaggerModule.createDocument(app, config);
-	const customOptions: SwaggerCustomOptions = { customSiteTitle: 'Gabia NestJS API Docs' };
+	const customOptions: SwaggerCustomOptions = {
+		customSiteTitle: 'Gabia NestJS API Docs',
+	};
 	SwaggerModule.setup('api', app, document, customOptions);
 
 	await app.listen(port);
-	console.log(`listening on port ${port}}`);
+	console.log(`listening on port ${port}`);
 
 	if (module.hot) {
 		module.hot.accept();

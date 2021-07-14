@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
-import { MariadbDatabaseModule } from 'src/common/database/mariadb/mariadb.database.module';
+import { usersProviders } from './users.providers';
+import { MysqlDatabaseModule } from 'src/common/database/mysql/mysql.database.module';
 
 @Module({
-	imports: [MariadbDatabaseModule],
+	imports: [MysqlDatabaseModule],
 	controllers: [UsersController],
-	providers: [UsersService]
+	providers: [...usersProviders, UsersService],
 })
 export class UsersModule { }
