@@ -11,6 +11,9 @@ export class Ghosting {
 	@Column()
 	serviceName: string;
 
+	@Column({ default: true })
+	status: string;
+
 	@CreateDateColumn()
 	createdAt: Date;
 

@@ -17,20 +17,4 @@ export class AwsBillingController {
 	findAll() {
 		return this.awsBillingService.findAll();
 	}
-
-	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.awsBillingService.findOne(+id);
-	}
-
-	@Patch(':id')
-	update(@Param('id') id: string, @Body() requestAwsBillingDto: RequestAwsBillingDto,
-	) {
-		return this.awsBillingService.update(+id, requestAwsBillingDto);
-	}
-
-	@Delete(':id')
-	remove(@Param('id') id: string) {
-		return this.awsBillingService.remove(+id);
-	}
 }

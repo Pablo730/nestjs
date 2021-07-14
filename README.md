@@ -33,7 +33,7 @@ $ npm i -g @nest js/cli
 # Window OS
 $ npm i --no-optional
 
-# Window OS에서 typeorm oracle 패키지 오류시
+# Window OS에서 typeorm oracle 패키지 오류시 관리자 권한으로
 $ npm install --global --production windows-build-tools
 
 # MacOS
