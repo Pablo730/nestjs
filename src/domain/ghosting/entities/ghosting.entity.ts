@@ -1,22 +1,26 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { User } from "src/domain/user/entities/user.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity()
+@Entity("GHOSTING")
 export class Ghosting {
 	@PrimaryGeneratedColumn()
-	id: number;
+	private id: number;
 
 	@Column()
-	userId: string;
+	private userId: string;
 
 	@Column()
-	serviceName: string;
+	private serviceName: string;
 
 	@Column({ default: true })
-	status: string;
+	private status: string;
 
 	@CreateDateColumn()
-	createdAt: Date;
+	private createdAt: Date;
 
 	@UpdateDateColumn()
-	updatedAt: Date;
+	private updatedAt: Date;
+
+	@ManyToOne(type => User, user => user.ghostingList)
+	user: User
 }

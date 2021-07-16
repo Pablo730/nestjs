@@ -20,12 +20,6 @@ export class GhostingController {
 		return this.ghostingService.findAll();
 	}
 
-	@ApiOperation({ summary: 'id로 Ghosting 조회' })
-	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.ghostingService.findOne(+id);
-	}
-
 	@ApiOperation({ summary: 'Ghosting 업데이트' })
 	@Patch(':id')
 	update(@Param('id') id: string, @Body() requestGhostingDto: RequestGhostingDto) {

@@ -1,27 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({
-	name: 'aws_billing',
-	// engine: '',
-	// database: 'root',
-	schema: 'test',
-	// synchronize: true,
-	// withoutRowid : false,
-	orderBy: {
-		id: 'DESC',
-		userId: 'ASC',
-	}
-})
+@Entity('AWS_BILLING')
 export class AwsBilling {
-	@PrimaryGeneratedColumn()
-	id: number;
+	@PrimaryColumn()
+	billingId: number;
 
 	@Column()
 	userId: string;
 
 	@Column()
-	month: string;
+	useMonth: string;
 
 	@Column()
-	cost: string;
+	useCost: string;
 }

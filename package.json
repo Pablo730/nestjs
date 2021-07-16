@@ -26,15 +26,18 @@
 		"@nestjs/core": "^7.6.15",
 		"@nestjs/platform-express": "^7.6.15",
 		"@nestjs/swagger": "^4.0.0",
-		"@nestjs/typeorm": "^7.0.1",
+		"@nestjs/typeorm": "^7.1.5",
 		"mariadb": "^2.5.4",
-		"mysql": "^2.18.1",
+		"mysql2": "^2.2.5",
+		"oracle": "^0.4.1",
+		"oracledb": "^5.2.0",
 		"reflect-metadata": "^0.1.13",
 		"rimraf": "^3.0.2",
 		"rxjs": "^6.6.6",
 		"swagger-ui-express": "^4.1.6",
 		"typeorm": "^0.2.34",
-		"typeorm-model-generator": "^0.4.4"
+		"typeorm-model-generator": "^0.4.4",
+		"typeorm-transactional-cls-hooked": "^0.1.21"
 	},
 	"devDependencies": {
 		"@nestjs/cli": "^7.6.0",

@@ -1,10 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiOperation, ApiTags, getSchemaPath } from '@nestjs/swagger';
-import { undefinedToNullInterceptor } from 'src/common/interceptors/undefinedToNull.interceptor';
+import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiOperation, ApiResponseProperty, ApiTags, getSchemaPath } from '@nestjs/swagger';
+import { undefinedToNullInterceptor } from 'src/core/interceptors/undefinedToNull.interceptor';
 import { RequestUserDto } from './dto/request-user.dto';
 import { ResponseUserDto } from './dto/response-user.dto';
-import { Users } from './entities/user.entity';
+import { UsersService } from './user.service';
 
 @ApiTags('USERS API')
 @UseInterceptors(undefinedToNullInterceptor)
@@ -17,8 +16,8 @@ export class UsersController {
 		description: 'SUCCESS',
 		schema: {
 			properties: {
-				code: { default: 'SUCCESS' },
-				data: { $ref: getSchemaPath(ResponseUserDto) },
+				statusCode: { default: 'SUCCESS' },
+				data: { example: ResponseUserDto },
 			}
 		}
 	})
@@ -26,39 +25,40 @@ export class UsersController {
 		description: 'FAIL',
 		schema: {
 			properties: {
-				code: { default: 'FAIL' },
+				statusCode: { default: '400' },
 				message: { example: 'already registered users.' }
 			}
 		}
 	})
+	@ApiResponseProperty({ type: ResponseUserDto })
 	@Post()
-	async join(@Body() requestUserDto: RequestUserDto) {
+	join(@Body() requestUserDto: RequestUserDto) {
 		return this.usersService.join(requestUserDto);
 	}
 
-	@ApiOperation({ summary: '로그인' })
-	@ApiCreatedResponse({
-		description: 'SUCCESS',
-		schema: {
-			properties: {
-				code: { default: 'SUCCESS' },
-				data: { $ref: getSchemaPath(ResponseUserDto) },
-			}
-		}
-	})
-	@ApiBadRequestResponse({
-		description: 'FAIL',
-		schema: {
-			properties: {
-				code: { default: 'FAIL' },
-				message: { example: 'password Inconsistency.' }
-			}
-		}
-	})
-	@Post('login')
-	async login(@Body() requestUserDto: RequestUserDto) {
-		return this.usersService.login(requestUserDto);
-	}
+	// @ApiOperation({ summary: '로그인' })
+	// @ApiCreatedResponse({
+	// 	description: 'SUCCESS',
+	// 	schema: {
+	// 		properties: {
+	// 			statusCode: { default: 'SUCCESS' },
+	// 			data: { $ref: getSchemaPath(ResponseUserDto) },
+	// 		}
+	// 	}
+	// })
+	// @ApiBadRequestResponse({
+	// 	description: 'FAIL',
+	// 	schema: {
+	// 		properties: {
+	// 			statusCode: { default: '400' },
+	// 			message: { example: 'password Inconsistency.' }
+	// 		}
+	// 	}
+	// })
+	// @Post('login')
+	// async login(@Body() requestUserDto: RequestUserDto) {
+	// 	return this.usersService.login(requestUserDto);
+	// }
 
 
 	@ApiOperation({ summary: '로그아웃' })
@@ -66,7 +66,7 @@ export class UsersController {
 		description: 'SUCCESS',
 		schema: {
 			properties: {
-				code: { default: 'SUCCESS' }
+				statusCode: { default: 'SUCCESS' }
 			}
 		}
 	})
@@ -74,7 +74,7 @@ export class UsersController {
 		description: 'FAIL',
 		schema: {
 			properties: {
-				code: { default: 'FAIL' },
+				statusCode: { default: '400' },
 				message: { example: 'already logout.' }
 			}
 		}
@@ -89,7 +89,7 @@ export class UsersController {
 		description: 'SUCCESS',
 		schema: {
 			properties: {
-				code: { default: 'SUCCESS' },
+				statusCode: { default: 'SUCCESS' },
 				data: { $ref: getSchemaPath(ResponseUserDto) },
 			}
 		}
@@ -98,7 +98,7 @@ export class UsersController {
 		description: 'FAIL',
 		schema: {
 			properties: {
-				code: { default: 'FAIL' },
+				statusCode: { default: '400' },
 				message: { example: 'non-existent user.' }
 			}
 		}
@@ -113,7 +113,7 @@ export class UsersController {
 		description: 'SUCCESS',
 		schema: {
 			properties: {
-				code: { default: 'SUCCESS' },
+				statusCode: { default: 'SUCCESS' },
 				data: { $ref: getSchemaPath(ResponseUserDto) },
 			}
 		}
@@ -122,7 +122,7 @@ export class UsersController {
 		description: 'FAIL',
 		schema: {
 			properties: {
-				code: { default: 'FAIL' },
+				statusCode: { default: '400' },
 				message: { example: 'non-existent user.' }
 			}
 		}
@@ -135,19 +135,20 @@ export class UsersController {
 	@ApiOperation({ summary: '탈퇴 요청' })
 	@ApiCreatedResponse({
 		description: 'SUCCESS',
-		schema: { properties: { code: { default: 'SUCCESS' } } }
+		schema: { properties: { statusCode: { default: 'SUCCESS' } } }
 	})
 	@ApiBadRequestResponse({
 		description: 'FAIL',
 		schema: {
 			properties: {
-				code: { default: 'FAIL' },
+				statusCode: { default: '400' },
 				message: { example: 'already resigned user.' }
 			}
 		}
 	})
 	@Delete(':id')
-	async remove(@Param('id') id: string) {
-		return this.usersService.remove(+id);
+	remove(@Param('id') id: string) {
+		console.log(id);
+		return this.usersService.remove(Number(id));
 	}
 }

@@ -3,7 +3,7 @@ import { AwsResourceService } from './aws-resource.service';
 import { AwsResourceController } from './aws-resource.controller';
 
 @Module({
-  controllers: [AwsResourceController],
-  providers: [AwsResourceService],
+	controllers: [AwsResourceController],
+	providers: [AwsResourceService],
 })
-export class AwsResourceModule {}
+export class AwsResourceModule { }

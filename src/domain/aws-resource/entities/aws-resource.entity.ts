@@ -1,20 +1,9 @@
-import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
-@Entity({
-	name: 'aws_billing',
-	// engine: '',
-	// database: 'root',
-	schema: 'test',
-	// synchronize: true,
-	// withoutRowid : false,
-	orderBy: {
-		id: 'DESC',
-		userId: 'ASC',
-	}
-})
+@Entity('AWS_RESOURCE')
 export class AwsResource {
-	@PrimaryGeneratedColumn()
-	id: number;
+	@PrimaryColumn()
+	resourceId: number;
 
 	@Column()
 	userId: string;
@@ -23,11 +12,5 @@ export class AwsResource {
 	serviceName: string;
 
 	@Column()
-	traffic: string;
-
-	@Column({ type: 'datetime' })
-	startDate: Date;
-
-	@Column({ type: 'datetime' })
-	endDate: Date;
+	month: string;
 }

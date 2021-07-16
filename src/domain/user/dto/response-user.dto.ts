@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from '../entities/user.entity';
 
 export class ResponseUserDto {
 	@ApiProperty({
@@ -6,26 +7,40 @@ export class ResponseUserDto {
 		description: '유저 ID',
 		required: true,
 	})
-	readonly userId: string;
+	public userId: string;
 
 	@ApiProperty({
 		example: '김창민',
 		description: '유저 이름',
 		required: true,
 	})
-	readonly userName: string;
+	public userName: string;
 
 	@ApiProperty({
 		example: 'kcm@gabia.com',
 		description: '유저 메일',
 		required: true,
 	})
-	readonly eamil: string;
+	public eamil: string;
 
 	@ApiProperty({
 		example: true,
 		description: '탈퇴 여부',
 		required: true,
 	})
-	readonly isActive: boolean;
+	public isActive: boolean;
+
+	@ApiProperty({
+		example: '2021/07/15',
+		description: '유저 생성 날짜',
+		required: true,
+	})
+	public createdAt: Date;
+
+	@ApiProperty({
+		example: '2021/07/16',
+		description: '유저 정보 업데이트 날짜',
+		required: true,
+	})
+	public updatedAt: Date;
 }

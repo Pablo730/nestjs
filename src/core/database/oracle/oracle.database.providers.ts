@@ -8,12 +8,11 @@ export const OracleDatabaseProviders = [
 		useFactory: async () =>
 			await createConnection({
 				type: 'oracle',
-				host: process.env.ORACLE_HOST,
-				port: +process.env.ORACLE_PORT,
-				username: process.env.ORACLE_USERNAME,
-				password: process.env.ORACLE_PASSWORD,
-				database: process.env.ORACLE_DATABASE,
-				entities: [AwsResource, AwsBilling],
+				username: 'gtest',
+				host: '27.96.134.173',//process.env.ORACLE_HOST,
+				port: 9020,
+				password: 'gtest',
+				entities: [AwsBilling],
 				synchronize: true,
 				logging: true,
 			}),

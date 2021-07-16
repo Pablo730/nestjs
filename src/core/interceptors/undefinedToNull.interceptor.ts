@@ -5,6 +5,6 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class undefinedToNullInterceptor implements NestInterceptor {
 	intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
-		return next.handle().pipe(map((data) => data === undefined ? { code: 'FAIL', data: null } : { code: 'SUCCESS', data: data }));
+		return next.handle().pipe(map((data) => data === undefined ? { statusCode: 'FAIL', data: null } : { statusCode: 'SUCCESS', data: data }));
 	}
 }

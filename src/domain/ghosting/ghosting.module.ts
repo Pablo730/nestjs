@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { GhostingService } from './ghosting.service';
 import { GhostingController } from './ghosting.controller';
-import { MysqlDatabaseModule } from 'src/common/database/mysql/mysql.database.module';
-import { usersProviders } from '../users/users.providers';
+// import { MysqlDatabaseModule } from 'src/core/database/mysql/mysql.database.module';
+// import { ghostingProviders } from './ghosting.provider';
 
 @Module({
-	imports: [MysqlDatabaseModule],
+	// imports: [MysqlDatabaseModule],
 	controllers: [GhostingController],
-	providers: [...usersProviders, GhostingService]
+	providers: [
+		// ...ghostingProviders,
+		GhostingService]
 })
 export class GhostingModule { }
